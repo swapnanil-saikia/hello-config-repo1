@@ -1,0 +1,26 @@
+server:
+  port: 8085
+ 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    preferIpAddress: true  
+
+spring:  
+  cloud:
+    gateway:
+      routes:
+      - id: hccModule
+        uri: lb://HELLO-CLIENT-CONSUMER
+        predicates:
+        - Path=/hcc/**
+      - id: hcModule
+        uri: lb://HELLO-CLIENT-SERVICE
+        predicates:
+        - Path=/hc/**
+      - id: hrcModule
+        uri: lb://HELLO-CLIENT-CONSUMER
+        predicates:
+        - Path=/hrc/**
